@@ -1,0 +1,26 @@
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity("tasks_copy_19")
+export class TaskCopy19 {
+
+	@PrimaryGeneratedColumn("increment")
+	id: number;
+
+	@Column()
+	title: string;
+
+	@Column()
+	description: string;
+
+	@ManyToOne(() => TaskCopy19, (task) => task.tasks, { nullable: true })
+	parentId: TaskCopy19;
+
+	@OneToMany(() => TaskCopy19, (task) => task.parentId, { nullable: true })
+	tasks: TaskCopy19[];
+
+	@Column()
+	userId: number;
+
+	// @UpdateDateColumn()
+
+}
