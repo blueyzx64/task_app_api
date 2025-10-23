@@ -36,7 +36,7 @@ export class TasksService {
     // taskToSave.userId = this.id;
 
     if (taskParent) {
-      taskToSave.parentId = taskParent;
+      taskToSave.parentId = Promise.resolve(taskParent);
     }
 
     const savedTask = await this.taskRepository.save(taskToSave);
@@ -52,8 +52,8 @@ export class TasksService {
     const tasks = await this.taskRepository.find({
       where: {
         userId
-      },
-      relations: ["parentId", "tasks"]
+      }
+      // Relations are lazy-loaded, no need to specify relations
     });
     return tasks;
   }
@@ -65,12 +65,11 @@ export class TasksService {
     }
 
     const task = await this.taskRepository.findOne({
-
       where: {
         id,
         userId
-      },
-      relations: ["parentId", "tasks"]
+      }
+      // Relations are lazy-loaded, no need to specify relations
     });
 
     return task;

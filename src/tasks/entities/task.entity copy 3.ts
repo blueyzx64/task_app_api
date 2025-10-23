@@ -12,11 +12,11 @@ export class TaskCopy3 {
 	@Column()
 	description: string;
 
-	@ManyToOne(() => TaskCopy3, (task) => task.tasks, { nullable: true })
-	parentId: TaskCopy3;
+	@ManyToOne(() => TaskCopy3, (task) => task.tasks, { nullable: true, lazy: true })
+	parentId: Promise<TaskCopy3>;
 
-	@OneToMany(() => TaskCopy3, (task) => task.parentId, { nullable: true })
-	tasks: TaskCopy3[];
+	@OneToMany(() => TaskCopy3, (task) => task.parentId, { nullable: true, lazy: true })
+	tasks: Promise<TaskCopy3[]>;
 
 	@Column()
 	userId: number;
